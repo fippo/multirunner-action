@@ -7,10 +7,15 @@ inputs:
   version:
     description: 'What version of the browser to install'
     default: 'stable'
+outputs:
+  path:
+    description: 'browser binary path'
+    value: ${{steps.setup.outputs.path}}
 runs:
   using: 'composite'
   steps: 
-    - run: node_modules_travis_multirunner/setup.sh
+    - id: setup
+      run: ${{github.action_path}}/setup.sh
       shell: bash
       env:
         BROWSER: ${{inputs.browser}}
